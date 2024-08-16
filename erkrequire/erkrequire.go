@@ -8,13 +8,16 @@ import (
 )
 
 func NoError(t *testing.T, erk *errors.Error, msgAndArgs ...interface{}) {
-	if erk != nil { //这里必须在非空时才能让它去判断，否则即使是 nil 也会报错
-		require.NoError(t, erk, msgAndArgs...)
-	}
+	require.NoError(t, erk2erx(erk), msgAndArgs...)
 }
 
 func Error(t *testing.T, erk *errors.Error, msgAndArgs ...interface{}) {
+	require.Error(t, erk2erx(erk), msgAndArgs...) //这里必须传递个空才行，跟前面的情况相同
+}
+
+func erk2erx(erk *errors.Error) error {
 	if erk == nil {
-		require.Error(t, nil, msgAndArgs...) //这里必须传递个空才行，跟前面的情况相同
+		return nil //这里必须做这样的转换，因为两个 nil 是不一样的
 	}
+	return erk
 }
