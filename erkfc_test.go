@@ -12,4 +12,5 @@ func TestNewErkFc(t *testing.T) {
 	erk := NewErkFc(errors_example.ErrorServerDbError, "erk")(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
+	t.Log(erk)
 }

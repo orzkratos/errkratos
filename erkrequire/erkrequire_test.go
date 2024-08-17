@@ -12,7 +12,7 @@ import (
 
 func TestNoError(t *testing.T) {
 	var erk *errors.Error
-	require.Error(t, erk)      // 这里是不符合预期的
+	require.Error(t, erk)      // 这是不符合预期的
 	erkrequire.NoError(t, erk) // 需要使用这个函数
 }
 
