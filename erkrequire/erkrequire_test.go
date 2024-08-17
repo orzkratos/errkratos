@@ -10,13 +10,13 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func TestNoError(t *testing.T) {
+func TestNoErrorFunction(t *testing.T) {
 	var erk *errors.Error
 	require.Error(t, erk)      // 这是不符合预期的
 	erkrequire.NoError(t, erk) // 需要使用这个函数
 }
 
-func TestError(t *testing.T) {
+func TestErrorFunction(t *testing.T) {
 	var erk = errors_example.ErrorServerDbError("erx=%s", erero.New("wac"))
 	erkrequire.Error(t, erk)
 }

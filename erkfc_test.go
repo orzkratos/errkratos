@@ -8,8 +8,15 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func TestNewErkFc(t *testing.T) {
-	erk := NewErkFc(errors_example.ErrorServerDbError, "erk")(erero.New("wac"))
+func TestNewErkFsc(t *testing.T) {
+	erk := NewErkFsc(errors_example.ErrorServerDbError, "erk")(erero.New("wac"))
+	require.NotNil(t, erk)
+	require.True(t, errors_example.IsServerDbError(erk))
+	t.Log(erk)
+}
+
+func TestNewErkFmx(t *testing.T) {
+	erk := NewErkFmx(errors_example.ErrorServerDbError, "msg")(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)
