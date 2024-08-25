@@ -33,3 +33,11 @@ func NewErkFm(erkFc func(format string, args ...interface{}) *errors.Error, msg 
 func NewErkFmx(erkFc func(format string, args ...interface{}) *errors.Error, msg string) func(erx error) *errors.Error {
 	return NewErkFm(erkFc, msg, "erx")
 }
+
+func As(erx error) (erk *errors.Error, ok bool) {
+	return erk, errors.As(erx, &erk)
+}
+
+func Is(erx error, target error) (ok bool) {
+	return errors.Is(erx, target)
+}
