@@ -29,8 +29,7 @@ func TestNewErkFmx2(t *testing.T) {
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)
 
-	var err error
-	err = erk
+	var err error = erk
 
 	var target *errors.Error
 	ok := errors.As(err, &target)
