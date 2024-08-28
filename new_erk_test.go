@@ -9,30 +9,30 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func TestNewErkFsc(t *testing.T) {
-	erk := NewErkFsc(errors_example.ErrorServerDbError, "erk")(erero.New("wac"))
+func TestNewErkFsC(t *testing.T) {
+	erk := NewErkFsC(errors_example.ErrorServerDbError, "erk")(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)
 }
 
-func TestNewErkFmx(t *testing.T) {
-	erk := NewErkFmx(errors_example.ErrorServerDbError, "msg")(erero.New("wac"))
+func TestNewErkMtX(t *testing.T) {
+	erk := NewErkMtX(errors_example.ErrorServerDbError, "msg")(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)
 }
 
-func TestNewErkFmx2(t *testing.T) {
-	erk := NewErkFmx(errors_example.ErrorServerDbError, "msg")(erero.New("wac"))
+func TestNewErkMtX_2(t *testing.T) {
+	erk := NewErkMtX(errors_example.ErrorServerDbError, "msg")(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)
 
-	var err error = erk
+	var erx error = erk
 
 	var target *errors.Error
-	ok := errors.As(err, &target)
+	ok := errors.As(erx, &target)
 	t.Log(ok)
 	t.Log(target)
 }
