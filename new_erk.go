@@ -3,22 +3,22 @@ package erkkratos
 import "github.com/go-kratos/kratos/v2/errors"
 
 // NewErkFsK 指定错误的前缀让错误打印更加简单
-func NewErkFsK(efc func(format string, args ...interface{}) *errors.Error, startWith string, middleOpt string) func(erx error) *errors.Error {
+func NewErkFsK(efc func(format string, args ...interface{}) *errors.Error, caption string, middleOpt string) func(erx error) *errors.Error {
 	return func(erx error) *errors.Error {
-		return efc("%s%s%s", startWith, middleOpt, erx).WithCause(erx)
+		return efc("%s%s%s", caption, middleOpt, erx).WithCause(erx)
 	}
 }
 
-func NewErkFsB(efc func(format string, args ...interface{}) *errors.Error, startWith string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, startWith, " ")
+func NewErkFsB(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
+	return NewErkFsK(efc, caption, " ")
 }
 
-func NewErkFsC(efc func(format string, args ...interface{}) *errors.Error, startWith string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, startWith, ":")
+func NewErkFsC(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
+	return NewErkFsK(efc, caption, ":")
 }
 
-func NewErkFsE(efc func(format string, args ...interface{}) *errors.Error, startWith string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, startWith, "=")
+func NewErkFsE(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
+	return NewErkFsK(efc, caption, "=")
 }
 
 // NewErkMtK 让错误返回的消息能够被前端直接展示，而把错误的细节放在 metadata 里面
