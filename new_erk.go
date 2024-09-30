@@ -1,43 +1,44 @@
 package erkkratos
 
-import "github.com/go-kratos/kratos/v2/errors"
+import (
+	"github.com/go-kratos/kratos/v2/errors"
+)
 
-// NewErkFsK 指定错误的前缀让错误打印更加简单
-func NewErkFsK(efc func(format string, args ...interface{}) *errors.Error, caption string, middleOpt string) func(erx error) *errors.Error {
-	return func(erx error) *errors.Error {
-		return efc("%s%s%s", caption, middleOpt, erx).WithCause(erx)
+// ErkBottle 封装错误处理所需的属性
+type ErkBottle struct {
+	efc         func(format string, args ...interface{}) *errors.Error
+	caption     string
+	punctuation string
+}
+
+// NewErkBottle 创建一个新的 ErkBottle 实例
+func NewErkBottle(efc func(format string, args ...interface{}) *errors.Error, caption string, punctuation string) *ErkBottle {
+	return &ErkBottle{
+		efc:         efc,
+		caption:     caption,
+		punctuation: punctuation,
 	}
 }
 
-func NewErkFsB(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, caption, " ")
+// SetErkFunc 设置 efc 属性并返回自身，以支持链式调用
+func (b *ErkBottle) SetErkFunc(efc func(format string, args ...interface{}) *errors.Error) *ErkBottle {
+	b.efc = efc
+	return b
 }
 
-func NewErkFsC(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, caption, ":")
+// SetCaption 设置 caption 属性并返回自身，以支持链式调用
+func (b *ErkBottle) SetCaption(caption string) *ErkBottle {
+	b.caption = caption
+	return b
 }
 
-func NewErkFsE(efc func(format string, args ...interface{}) *errors.Error, caption string) func(erx error) *errors.Error {
-	return NewErkFsK(efc, caption, "=")
+// SetPunctuation 设置 punctuation 属性并返回自身，以支持链式调用
+func (b *ErkBottle) SetPunctuation(punctuation string) *ErkBottle {
+	b.punctuation = punctuation
+	return b
 }
 
-// NewErkMtK 让错误返回的消息能够被前端直接展示，而把错误的细节放在 metadata 里面
-func NewErkMtK(efc func(format string, args ...interface{}) *errors.Error, message string, metaKeyName string) func(erx error) *errors.Error {
-	return func(erx error) *errors.Error {
-		return efc("%s", message).WithCause(erx).WithMetadata(map[string]string{
-			metaKeyName: erx.Error(),
-		})
-	}
-}
-
-func NewErkMtX(efc func(format string, args ...interface{}) *errors.Error, message string) func(erx error) *errors.Error {
-	return NewErkMtK(efc, message, "erx")
-}
-
-func As(erx error) (erk *errors.Error, ok bool) {
-	return erk, errors.As(erx, &erk)
-}
-
-func Is(erx error, target error) (ok bool) {
-	return errors.Is(erx, target)
+// Wrap 方法用于包装错误并返回格式化的错误信息
+func (b *ErkBottle) Wrap(erx error) *errors.Error {
+	return b.efc("%s%s%s", b.caption, b.punctuation, erx).WithCause(erx)
 }

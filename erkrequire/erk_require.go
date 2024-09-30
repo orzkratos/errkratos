@@ -2,6 +2,7 @@ package erkrequire
 
 import (
 	"github.com/go-kratos/kratos/v2/errors"
+	"github.com/orzkratos/erkkratos/internal/utils"
 	"github.com/stretchr/testify/require"
 )
 
@@ -20,10 +21,15 @@ func eke(erk *errors.Error) error {
 	return erk
 }
 
-func Is(t require.TestingT, expected *errors.Error, actualEx *errors.Error, msgAndArgs ...interface{}) {
-	require.Equal(t, bool(eke(expected) == nil), bool(eke(actualEx) == nil), msgAndArgs...)
-	if expected != nil && actualEx != nil {
-		require.Equal(t, expected.Reason, actualEx.Reason, msgAndArgs...)
-		require.Equal(t, expected.Code, actualEx.Code, msgAndArgs...)
+func Is(t require.TestingT, expected *errors.Error, inputErk *errors.Error, msgAndArgs ...interface{}) {
+	require.Equal(
+		t,
+		utils.NewBoolean(eke(expected) == nil),
+		utils.NewBoolean(eke(inputErk) == nil),
+		msgAndArgs...,
+	)
+	if expected != nil && inputErk != nil {
+		require.Equal(t, expected.Reason, inputErk.Reason, msgAndArgs...)
+		require.Equal(t, expected.Code, inputErk.Code, msgAndArgs...)
 	}
 }
