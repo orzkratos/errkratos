@@ -8,9 +8,9 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func TestNewEmtBottle_Wrap(t *testing.T) {
-	emtBottle := NewEmtBottle(errors_example.ErrorServerDbError, "msg", "erk")
-	erk := emtBottle.Wrap(erero.New("wac"))
+func TestNewEmkBottle_Wrap(t *testing.T) {
+	emkBottle := NewEmkBottle(errors_example.ErrorServerDbError, "msg", "erk")
+	erk := emkBottle.Wrap(erero.New("wac"))
 	require.NotNil(t, erk)
 	require.True(t, errors_example.IsServerDbError(erk))
 	t.Log(erk)

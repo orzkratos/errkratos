@@ -1,3 +1,3 @@
 package utils
 
-func NewBoolean(b bool) bool { return b }
+func GetValue[T any](value T) T { return value }
