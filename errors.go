@@ -5,9 +5,12 @@ import (
 	"github.com/orzkratos/erkkratos/internal/utils"
 )
 
+// Error 再定义个别名，使用它，能避免与官方的errors包名冲突
+type Error = errors.Error
+
 // As 这里使用As就直接能指定类型，这样能够简便些，毕竟在这个语境下的目标类型确定
-func As(erx error) (erk *errors.Error, ok bool) {
-	ok = errors.As(erx, &erk)
+func As(err error) (erk *errors.Error, ok bool) {
+	ok = errors.As(err, &erk)
 	if !ok {
 		return nil, false
 	}
