@@ -1,9 +1,9 @@
-module github.com/orzkratos/erkkratos
+module github.com/orzkratos/errkratos
 
 go 1.22.8
 
 require (
-	github.com/go-kratos/kratos/v2 v2.8.3
+	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/erero v1.0.19
 )

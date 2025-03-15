@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/erkkratos/erkrequire"
-	"github.com/orzkratos/erkkratos/internal/errors_example"
+	"github.com/orzkratos/errkratos/erkrequire"
+	"github.com/orzkratos/errkratos/internal/errors_example"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/erero"
 )

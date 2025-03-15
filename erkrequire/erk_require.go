@@ -2,7 +2,7 @@ package erkrequire
 
 import (
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/erkkratos/internal/utils"
+	"github.com/orzkratos/errkratos/internal/utils"
 	"github.com/stretchr/testify/require"
 )
 
