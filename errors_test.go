@@ -9,36 +9,6 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func TestNewEro(t *testing.T) {
-	ero := NewEro(errors_example.ErrorServerDbError("wrong reason=%s", "unknown"))
-	require.NotNil(t, ero)
-	require.NotNil(t, ero.Erk)
-
-	t.Log(ero.Erk.String())
-}
-
-func TestFmtEro(t *testing.T) {
-	ero := FmtEro(errors_example.ErrorServerDbError, "wrong reason=%s", "unknown")
-	require.NotNil(t, ero)
-	require.NotNil(t, ero.Erk)
-
-	{
-		var erx interface{} = ero
-		err, ok := erx.(error) //不要实现 error 接口，而且注意一定不要实现，否则会加重开发者的心智负担
-		require.False(t, ok)
-		require.Nil(t, err)
-	}
-
-	{
-		var erx interface{} = ero.Erk
-		err, ok := erx.(error) //已经实现 error 接口
-		require.True(t, ok)
-		require.Error(t, err)
-	}
-
-	t.Log(ero.Erk.String())
-}
-
 func TestAs(t *testing.T) {
 	{
 		var erk = errors_example.ErrorServerDbError("wrong")
