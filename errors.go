@@ -26,3 +26,13 @@ func Is(erk *errors.Error, target *errors.Error) bool {
 	}
 	return erk.Is(target)
 }
+
+// FromError 就是把 error 转换成 *Error 这里封装避免外部再引用 errors 包名，能避免与官方的errors包名冲突
+func FromError(err error) *errors.Error {
+	return errors.FromError(err)
+}
+
+// From 简化函数名，避免写太长的函数名
+func From(err error) *errors.Error {
+	return FromError(err)
+}
