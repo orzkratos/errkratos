@@ -3,10 +3,11 @@ package errbizkratos_test
 import (
 	"testing"
 
-	"github.com/orzkratos/errkratos"
+	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/orzkratos/errkratos/errbizkratos"
 	"github.com/orzkratos/errkratos/internal/errors_example"
 	"github.com/stretchr/testify/require"
+	"github.com/yyle88/erero"
 )
 
 func TestNewEbz(t *testing.T) {
@@ -39,9 +40,44 @@ func TestNewEbz_NotImplementErrorInterface(t *testing.T) {
 	t.Log(ebz.Erk.String())
 }
 
+func TestAs(t *testing.T) {
+	{
+		var erk = errors_example.ErrorServerDbError("wrong")
+		var err error = erk
+		requireNone(t, err)
+		res, ok := errbizkratos.As(err)
+		require.True(t, ok)
+		t.Log(res)
+		require.NotNil(t, res)
+	}
+
+	{
+		var erk *errors.Error
+		var err error = erk
+		requireNone(t, err)
+		res, ok := errbizkratos.As(err)
+		require.True(t, ok)
+		t.Log(res)
+		require.Nil(t, res)
+	}
+}
+
+func requireNone(t *testing.T, err error) {
+	require.False(t, err == nil)
+}
+
+func TestIs(t *testing.T) {
+	ebz1 := errbizkratos.NewEbz(errors_example.ErrorServerDbError("wrong-1"))
+	ebz2 := errbizkratos.NewEbz(errors_example.ErrorServerDbError("wrong-2"))
+	require.True(t, errbizkratos.Is(ebz1, ebz2))
+
+	require.True(t, errors.Is(ebz1.Erk, ebz1.Erk)) //还是相等
+	require.True(t, erero.Ise(ebz1.Erk, ebz1.Erk)) //依然相等
+}
+
 func TestFrom(t *testing.T) {
 	ebz1 := errbizkratos.NewEbz(errors_example.ErrorServerDbError("wrong"))
 	var err error = ebz1.Erk
 	ebz2 := errbizkratos.From(err)
-	require.True(t, errkratos.Is(ebz1.Erk, ebz2.Erk))
+	require.True(t, errbizkratos.Is(ebz1, ebz2))
 }
