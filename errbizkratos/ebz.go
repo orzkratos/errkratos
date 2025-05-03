@@ -17,6 +17,11 @@ func NewEbz(erk *errkratos.Erk) *Ebz {
 	}
 }
 
+// New 返回 Ebz，让函数名更简洁，因为这个包里没有别的结构，这里不指定结构名称，也是很清晰的
+func New(erk *errkratos.Erk) *Ebz {
+	return NewEbz(erk)
+}
+
 // As 这里使用As就直接能指定类型，这样能够简便些，毕竟在这个语境下的目标类型确定
 func As(err error) (ebz *Ebz, ok bool) {
 	if erk, ok := errkratos.As(err); ok {

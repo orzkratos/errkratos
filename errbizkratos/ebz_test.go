@@ -18,6 +18,14 @@ func TestNewEbz(t *testing.T) {
 	t.Log(ebz.Erk.String())
 }
 
+func TestNew(t *testing.T) {
+	ebz := errbizkratos.New(errors_example.ErrorServerDbTransactionError("wrong reason=%s", "unknown"))
+	require.NotNil(t, ebz)
+	require.NotNil(t, ebz.Erk)
+
+	t.Log(ebz.Erk.String())
+}
+
 func TestNewEbz_NotImplementErrorInterface(t *testing.T) {
 	ebz := errbizkratos.NewEbz(errors_example.ErrorServerDbError("wrong reason=%s", "unknown"))
 	require.NotNil(t, ebz)
