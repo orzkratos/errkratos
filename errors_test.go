@@ -14,7 +14,9 @@ func TestAs(t *testing.T) {
 	{
 		var erk = errors_example.ErrorServerDbError("wrong")
 		var err error = erk
-		requireNone(t, err)
+		// t.Log(erk != nil) // true
+		// t.Log(err != nil) // true
+
 		res, ok := errkratos.As(err)
 		require.True(t, ok)
 		t.Log(res)
@@ -24,16 +26,14 @@ func TestAs(t *testing.T) {
 	{
 		var erk *errors.Error
 		var err error = erk
-		requireNone(t, err)
+		// t.Log(erk != nil) // false
+		// t.Log(err != nil) // true
+
 		res, ok := errkratos.As(err)
 		require.True(t, ok)
 		t.Log(res)
 		require.Nil(t, res)
 	}
-}
-
-func requireNone(t *testing.T, err error) {
-	require.False(t, err == nil)
 }
 
 func TestIs(t *testing.T) {

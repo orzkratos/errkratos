@@ -8,19 +8,19 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestToError(t *testing.T) {
-	correctLogic := func() *errors.Error {
+func TestAdapt(t *testing.T) {
+	runSuccess := func() *errors.Error {
 		return nil
 	}
 
 	{
-		erk := correctLogic()
+		erk := runSuccess()
 		var err error = erk
 		require.Error(t, err) //这里有问题
 	}
 	{
-		erk := correctLogic()
-		var err = utils.ToError(erk)
+		erk := runSuccess()
+		var err = utils.Adapt(erk)
 		require.NoError(t, err) //这才是对的
 	}
 }

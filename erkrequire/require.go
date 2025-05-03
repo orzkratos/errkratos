@@ -7,11 +7,11 @@ import (
 )
 
 func NoError(t require.TestingT, erk *errors.Error, msgAndArgs ...interface{}) {
-	require.NoError(t, utils.ToError(erk), msgAndArgs...)
+	require.NoError(t, utils.Adapt(erk), msgAndArgs...)
 }
 
 func Error(t require.TestingT, erk *errors.Error, msgAndArgs ...interface{}) {
-	require.Error(t, utils.ToError(erk), msgAndArgs...) //这里必须传递个空才行，跟前面的情况相同
+	require.Error(t, utils.Adapt(erk), msgAndArgs...) //这里必须传递个空才行，跟前面的情况相同
 }
 
 func Is(t require.TestingT, expected *errors.Error, erkParam *errors.Error, msgAndArgs ...interface{}) {
