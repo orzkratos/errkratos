@@ -1,4 +1,4 @@
-package errbizkratos
+package ebzkratos
 
 import (
 	"github.com/go-kratos/kratos/v2/errors"
