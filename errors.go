@@ -4,10 +4,7 @@ import (
 	"github.com/go-kratos/kratos/v2/errors"
 )
 
-// Error 再定义个别名，使用它，能避免与官方的errors包名冲突
-type Error = errors.Error
-
-// Erk 使用简单的名字简化代码
+// Erk 使用简单的名字简化代码，给 errors.Error 定义个别名，使用它，能避免与官方的 errors 包名冲突
 type Erk = errors.Error
 
 // As 这里使用As就直接能指定类型，这样能够简便些，毕竟在这个语境下的目标类型确定
