@@ -17,10 +17,12 @@ func TestAdapt(t *testing.T) {
 		erk := runSuccess()
 		var err error = erk
 		require.Error(t, err) //这里有问题
+		// 具体原因请看这里 https://go.dev/doc/faq#nil_error 因为类型和值都为nil的才是nil否则不是
 	}
 	{
 		erk := runSuccess()
 		var err = utils.Adapt(erk)
 		require.NoError(t, err) //这才是对的
+		// 具体原因请看这里 https://go.dev/doc/faq#nil_error 因为类型和值都为nil的才是nil否则不是
 	}
 }

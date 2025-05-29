@@ -16,6 +16,7 @@ func TestAs(t *testing.T) {
 		var err error = erk
 		// t.Log(erk != nil) // true
 		// t.Log(err != nil) // true
+		// 具体原因请看这里 https://go.dev/doc/faq#nil_error 因为类型和值都为nil的才是nil否则不是
 
 		res, ok := errkratos.As(err)
 		require.True(t, ok)
@@ -28,6 +29,7 @@ func TestAs(t *testing.T) {
 		var err error = erk
 		// t.Log(erk != nil) // false
 		// t.Log(err != nil) // true
+		// 具体原因请看这里 https://go.dev/doc/faq#nil_error 因为类型和值都为nil的才是nil否则不是
 
 		res, ok := errkratos.As(err)
 		require.True(t, ok)
