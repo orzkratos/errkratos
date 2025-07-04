@@ -1,4 +1,4 @@
-package erkbzmust
+package ebzkratosmust
 
 import (
 	"github.com/orzkratos/errkratos/ebzkratos"

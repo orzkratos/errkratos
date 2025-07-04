@@ -1,10 +1,10 @@
-package erkbzmust_test
+package ebzkratosmust_test
 
 import (
 	"testing"
 
 	"github.com/orzkratos/errkratos/ebzkratos"
-	"github.com/orzkratos/errkratos/ebzkratos/erkbzmust"
+	"github.com/orzkratos/errkratos/ebzkratos/ebzkratosmust"
 	"github.com/orzkratos/errkratos/internal/errors_example"
 	"github.com/orzkratos/errkratos/internal/tests"
 )
@@ -12,12 +12,12 @@ import (
 func TestDone(t *testing.T) {
 	{
 		var ebz *ebzkratos.Ebz
-		erkbzmust.Done(ebz)
+		ebzkratosmust.Done(ebz)
 	}
 
 	tests.ExpectPanic(t, func() {
 		var erk = errors_example.ErrorServerDbError("wrong db")
-		erkbzmust.Done(ebzkratos.New(erk))
+		ebzkratosmust.Done(ebzkratos.New(erk))
 	})
 
 	// 直接编译不过
@@ -30,12 +30,12 @@ func TestDone(t *testing.T) {
 func TestMust(t *testing.T) {
 	{
 		var ebz *ebzkratos.Ebz
-		erkbzmust.Must(ebz)
+		ebzkratosmust.Must(ebz)
 	}
 
 	tests.ExpectPanic(t, func() {
 		var ebz = errors_example.ErrorServerDbTransactionError("wrong tx")
-		erkbzmust.Must(ebzkratos.New(ebz))
+		ebzkratosmust.Must(ebzkratos.New(ebz))
 	})
 
 	// 直接编译不过
