@@ -5,7 +5,7 @@ import (
 
 	"github.com/orzkratos/errkratos/ebzkratos"
 	"github.com/orzkratos/errkratos/ebzkratos/ebzkratosmust"
-	"github.com/orzkratos/errkratos/internal/errors_example"
+	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/orzkratos/errkratos/internal/tests"
 )
 
@@ -16,7 +16,7 @@ func TestDone(t *testing.T) {
 	}
 
 	tests.ExpectPanic(t, func() {
-		var erk = errors_example.ErrorServerDbError("wrong db")
+		var erk = errorspb.ErrorServerDbError("wrong db")
 		ebzkratosmust.Done(ebzkratos.New(erk))
 	})
 
@@ -34,7 +34,7 @@ func TestMust(t *testing.T) {
 	}
 
 	tests.ExpectPanic(t, func() {
-		var ebz = errors_example.ErrorServerDbTransactionError("wrong tx")
+		var ebz = errorspb.ErrorServerDbTransactionError("wrong tx")
 		ebzkratosmust.Must(ebzkratos.New(ebz))
 	})
 

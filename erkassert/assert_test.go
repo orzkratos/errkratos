@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/orzkratos/errkratos/erkassert"
-	"github.com/orzkratos/errkratos/internal/errors_example"
+	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/yyle88/erero"
 	"github.com/yyle88/must"
 )
@@ -17,14 +17,14 @@ func TestNoError(t *testing.T) {
 }
 
 func TestError(t *testing.T) {
-	var erk = errors_example.ErrorServerDbError("msg=%s", erero.New("wac"))
+	var erk = errorspb.ErrorServerDbError("msg=%s", erero.New("wac"))
 	ok := erkassert.Error(t, erk)
 	must.TRUE(ok)
 }
 
 func TestIs(t *testing.T) {
-	erkA := errors_example.ErrorServerDbError("a")
-	erkB := errors_example.ErrorServerDbError("b")
+	erkA := errorspb.ErrorServerDbError("a")
+	erkB := errorspb.ErrorServerDbError("b")
 	ok := erkassert.Is(t, erkA, erkB)
 	must.TRUE(ok)
 }

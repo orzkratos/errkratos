@@ -5,14 +5,14 @@ import (
 
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/orzkratos/errkratos"
-	"github.com/orzkratos/errkratos/internal/errors_example"
+	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/erero"
 )
 
 func TestAs(t *testing.T) {
 	{
-		var erk = errors_example.ErrorServerDbError("wrong")
+		var erk = errorspb.ErrorServerDbError("wrong")
 		var err error = erk
 		// t.Log(erk != nil) // true
 		// t.Log(err != nil) // true
@@ -39,8 +39,8 @@ func TestAs(t *testing.T) {
 }
 
 func TestIs(t *testing.T) {
-	erk1 := errors_example.ErrorServerDbError("wrong-1")
-	erk2 := errors_example.ErrorServerDbError("wrong-2")
+	erk1 := errorspb.ErrorServerDbError("wrong-1")
+	erk2 := errorspb.ErrorServerDbError("wrong-2")
 	require.True(t, errkratos.Is(erk1, erk2))
 
 	require.True(t, errors.Is(erk1, erk1)) //还是相等
@@ -48,7 +48,7 @@ func TestIs(t *testing.T) {
 }
 
 func TestFrom(t *testing.T) {
-	erk1 := errors_example.ErrorServerDbError("wrong")
+	erk1 := errorspb.ErrorServerDbError("wrong")
 	var err error = erk1
 	erk2 := errkratos.From(err)
 	require.True(t, errkratos.Is(erk1, erk2))

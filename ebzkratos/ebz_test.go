@@ -5,13 +5,13 @@ import (
 
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/orzkratos/errkratos/ebzkratos"
-	"github.com/orzkratos/errkratos/internal/errors_example"
+	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/erero"
 )
 
 func TestNewEbz(t *testing.T) {
-	ebz := ebzkratos.NewEbz(errors_example.ErrorServerDbError("wrong reason=%s", "unknown"))
+	ebz := ebzkratos.NewEbz(errorspb.ErrorServerDbError("wrong reason=%s", "unknown"))
 	require.NotNil(t, ebz)
 	require.NotNil(t, ebz.Erk)
 
@@ -19,7 +19,7 @@ func TestNewEbz(t *testing.T) {
 }
 
 func TestNew(t *testing.T) {
-	ebz := ebzkratos.New(errors_example.ErrorServerDbTransactionError("wrong reason=%s", "unknown"))
+	ebz := ebzkratos.New(errorspb.ErrorServerDbTransactionError("wrong reason=%s", "unknown"))
 	require.NotNil(t, ebz)
 	require.NotNil(t, ebz.Erk)
 
@@ -27,7 +27,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestNewEbz_NotImplementErrorInterface(t *testing.T) {
-	ebz := ebzkratos.NewEbz(errors_example.ErrorServerDbError("wrong reason=%s", "unknown"))
+	ebz := ebzkratos.NewEbz(errorspb.ErrorServerDbError("wrong reason=%s", "unknown"))
 	require.NotNil(t, ebz)
 	require.NotNil(t, ebz.Erk)
 
@@ -50,7 +50,7 @@ func TestNewEbz_NotImplementErrorInterface(t *testing.T) {
 
 func TestAs(t *testing.T) {
 	{
-		var erk = errors_example.ErrorServerDbError("wrong")
+		var erk = errorspb.ErrorServerDbError("wrong")
 		var err error = erk
 		// t.Log(erk != nil) // true
 		// t.Log(err != nil) // true
@@ -77,8 +77,8 @@ func TestAs(t *testing.T) {
 }
 
 func TestIs(t *testing.T) {
-	ebz1 := ebzkratos.NewEbz(errors_example.ErrorServerDbError("wrong-1"))
-	ebz2 := ebzkratos.NewEbz(errors_example.ErrorServerDbError("wrong-2"))
+	ebz1 := ebzkratos.NewEbz(errorspb.ErrorServerDbError("wrong-1"))
+	ebz2 := ebzkratos.NewEbz(errorspb.ErrorServerDbError("wrong-2"))
 	require.True(t, ebzkratos.Is(ebz1, ebz2))
 
 	require.True(t, errors.Is(ebz1.Erk, ebz1.Erk)) //还是相等
@@ -86,7 +86,7 @@ func TestIs(t *testing.T) {
 }
 
 func TestFrom(t *testing.T) {
-	ebz1 := ebzkratos.NewEbz(errors_example.ErrorServerDbError("wrong"))
+	ebz1 := ebzkratos.NewEbz(errorspb.ErrorServerDbError("wrong"))
 	var err error = ebz1.Erk
 	ebz2 := ebzkratos.From(err)
 	require.True(t, ebzkratos.Is(ebz1, ebz2))
