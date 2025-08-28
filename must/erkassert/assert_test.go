@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/errkratos/erkassert"
 	"github.com/orzkratos/errkratos/internal/errorspb"
+	"github.com/orzkratos/errkratos/must/erkassert"
 	"github.com/yyle88/erero"
 	"github.com/yyle88/must"
 )

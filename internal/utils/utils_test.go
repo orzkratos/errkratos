@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestAdapt(t *testing.T) {
+func TestSafeInterface(t *testing.T) {
 	runSuccess := func() *errors.Error {
 		return nil
 	}
@@ -21,7 +21,7 @@ func TestAdapt(t *testing.T) {
 	}
 	{
 		erk := runSuccess()
-		var err = utils.Adapt(erk)
+		var err = utils.SafeInterface(erk)
 		require.NoError(t, err) //这才是对的
 		// 具体原因请看这里 https://go.dev/doc/faq#nil_error 因为类型和值都为nil的才是nil否则不是
 	}

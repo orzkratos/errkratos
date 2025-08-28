@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/orzkratos/errkratos"
-	"github.com/orzkratos/errkratos/erkmust"
 	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/orzkratos/errkratos/internal/tests"
+	"github.com/orzkratos/errkratos/must/erkmust"
 	"github.com/yyle88/must"
 )
 
