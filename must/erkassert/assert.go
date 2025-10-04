@@ -11,7 +11,7 @@ package erkassert
 
 import (
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/errkratos/internal/utils"
+	"github.com/orzkratos/errkratos/erkadapt"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,7 +25,7 @@ import (
 // 确保生产测试套件中可靠的错误缺失验证
 // 对于 Kratos 服务测试中验证成功操作至关重要
 func NoError(t assert.TestingT, erk *errors.Error, msgAndArgs ...interface{}) bool {
-	return assert.NoError(t, utils.SafeInterface(erk), msgAndArgs...)
+	return assert.NoError(t, erkadapt.Adapt(erk), msgAndArgs...)
 }
 
 // Error asserts that Kratos error is present with intelligent nil handling
@@ -38,7 +38,7 @@ func NoError(t assert.TestingT, erk *errors.Error, msgAndArgs ...interface{}) bo
 // 防止由 Go 接口 nil 指针语义引起的假阴性
 // 对于分布式服务环境中的错误条件测试至关重要
 func Error(t assert.TestingT, erk *errors.Error, msgAndArgs ...interface{}) bool {
-	return assert.Error(t, utils.SafeInterface(erk), msgAndArgs...)
+	return assert.Error(t, erkadapt.Adapt(erk), msgAndArgs...)
 }
 
 // Is performs deep equality comparison between two Kratos errors with comprehensive validation

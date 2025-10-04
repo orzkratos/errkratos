@@ -8,16 +8,18 @@ import (
 	"github.com/orzkratos/errgenkratos"
 	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/stretchr/testify/require"
+	"github.com/yyle88/neatjson/neatjsons"
 )
 
 func TestMain(m *testing.M) {
-	errgenkratos.SetMetadataFieldName("numeric_error_code")
+	errgenkratos.SetMetadataFieldName("numeric_reason_code")
 	m.Run()
 }
 
 func TestErrorUnknown(t *testing.T) {
 	erk := errorspb.ErrorUnknown("internal system failure: %s", "database connection lost")
 	t.Log(erk)
+	t.Log(neatjsons.S(erk))
 
 	require.NotNil(t, erk)
 	require.Equal(t, int32(500), erk.Code)
@@ -28,6 +30,7 @@ func TestErrorUnknown(t *testing.T) {
 func TestErrorServerDbError(t *testing.T) {
 	erk := errorspb.ErrorServerDbError("database query failed: %s", "connection timeout")
 	t.Log(erk)
+	t.Log(neatjsons.S(erk))
 
 	require.NotNil(t, erk)
 	require.Equal(t, int32(500), erk.Code)
@@ -38,6 +41,7 @@ func TestErrorServerDbError(t *testing.T) {
 func TestErrorServerDbTransactionError(t *testing.T) {
 	erk := errorspb.ErrorServerDbTransactionError("transaction failed: %s", "deadlock detected")
 	t.Log(erk)
+	t.Log(neatjsons.S(erk))
 
 	require.NotNil(t, erk)
 	require.Equal(t, int32(500), erk.Code)
@@ -46,47 +50,76 @@ func TestErrorServerDbTransactionError(t *testing.T) {
 }
 
 func TestIsUnknown(t *testing.T) {
-	erk := errorspb.ErrorUnknown("test unknown error")
-	t.Log(erk)
-	require.True(t, errorspb.IsUnknown(erk))
+	t.Run("match unknown", func(t *testing.T) {
+		erk := errorspb.ErrorUnknown("test unknown error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsUnknown(erk))
+	})
 
-	dbErk := errorspb.ErrorServerDbError("test db error")
-	t.Log(dbErk)
-	require.False(t, errorspb.IsUnknown(dbErk))
+	t.Run("not match db", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbError("test db error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.False(t, errorspb.IsUnknown(erk))
+	})
 
-	stdErk := errors.New(500, "UNKNOWN", "standard unknown error")
-	t.Log(stdErk)
-	require.True(t, errorspb.IsUnknown(stdErk))
+	t.Run("match standard", func(t *testing.T) {
+		erk := errors.New(500, "UNKNOWN", "standard unknown error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsUnknown(erk))
+	})
 
-	require.False(t, errorspb.IsUnknown(nil))
+	t.Run("nil check", func(t *testing.T) {
+		require.False(t, errorspb.IsUnknown(nil))
+	})
 }
 
 func TestIsServerDbError(t *testing.T) {
-	erk := errorspb.ErrorServerDbError("test db error")
-	t.Log(erk)
-	require.True(t, errorspb.IsServerDbError(erk))
+	t.Run("match db", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbError("test db error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsServerDbError(erk))
+	})
 
-	unknownErk := errorspb.ErrorUnknown("test unknown")
-	t.Log(unknownErk)
-	require.False(t, errorspb.IsServerDbError(unknownErk))
+	t.Run("not match unknown", func(t *testing.T) {
+		erk := errorspb.ErrorUnknown("test unknown")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.False(t, errorspb.IsServerDbError(erk))
+	})
 
-	stdErk := errors.New(500, "SERVER_DB_ERROR", "standard db error")
-	t.Log(stdErk)
-	require.True(t, errorspb.IsServerDbError(stdErk))
+	t.Run("match standard", func(t *testing.T) {
+		erk := errors.New(500, "SERVER_DB_ERROR", "standard db error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsServerDbError(erk))
+	})
 }
 
 func TestIsServerDbTransactionError(t *testing.T) {
-	erk := errorspb.ErrorServerDbTransactionError("test transaction error")
-	t.Log(erk)
-	require.True(t, errorspb.IsServerDbTransactionError(erk))
+	t.Run("match transaction", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbTransactionError("test transaction error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsServerDbTransactionError(erk))
+	})
 
-	dbErk := errorspb.ErrorServerDbError("test db error")
-	t.Log(dbErk)
-	require.False(t, errorspb.IsServerDbTransactionError(dbErk))
+	t.Run("not match db", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbError("test db error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.False(t, errorspb.IsServerDbTransactionError(erk))
+	})
 
-	stdErk := errors.New(500, "SERVER_DB_TRANSACTION_ERROR", "standard transaction error")
-	t.Log(stdErk)
-	require.True(t, errorspb.IsServerDbTransactionError(stdErk))
+	t.Run("match standard", func(t *testing.T) {
+		erk := errors.New(500, "SERVER_DB_TRANSACTION_ERROR", "standard transaction error")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.True(t, errorspb.IsServerDbTransactionError(erk))
+	})
 }
 
 func TestErrorReasonEnumValues(t *testing.T) {
@@ -106,10 +139,11 @@ func TestErrorReasonStringConversion(t *testing.T) {
 func TestMetadataFieldName(t *testing.T) {
 	erk := errorspb.ErrorServerDbError("test with metadata")
 	t.Log(erk)
+	t.Log(neatjsons.S(erk))
 
 	require.NotNil(t, erk.Metadata)
 
-	internalCode, exists := erk.Metadata["numeric_error_code"]
+	internalCode, exists := erk.Metadata["numeric_reason_code"]
 	require.True(t, exists)
 
 	expectedCode := fmt.Sprintf("%d", errorspb.ErrorReason_SERVER_DB_ERROR.Number())
@@ -117,35 +151,46 @@ func TestMetadataFieldName(t *testing.T) {
 }
 
 func TestAllErrorTypesHaveCorrectHttpCode(t *testing.T) {
-	// All errors should have HTTP 500 status code
-	unknownErk := errorspb.ErrorUnknown("test")
-	t.Log(unknownErk)
-	require.Equal(t, int32(500), unknownErk.Code)
+	t.Run("unknown code", func(t *testing.T) {
+		erk := errorspb.ErrorUnknown("test")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.Equal(t, int32(500), erk.Code)
+	})
 
-	dbErk := errorspb.ErrorServerDbError("test")
-	t.Log(dbErk)
-	require.Equal(t, int32(500), dbErk.Code)
+	t.Run("db code", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbError("test")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.Equal(t, int32(500), erk.Code)
+	})
 
-	txErk := errorspb.ErrorServerDbTransactionError("test")
-	t.Log(txErk)
-	require.Equal(t, int32(500), txErk.Code)
+	t.Run("transaction code", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbTransactionError("test")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
+		require.Equal(t, int32(500), erk.Code)
+	})
 }
 
 func TestCrossErrorTypeChecking(t *testing.T) {
-	// Create one error and test it against all Is functions
-	dbErk := errorspb.ErrorServerDbError("database connection failed")
-	t.Log(dbErk)
+	t.Run("db check", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbError("database connection failed")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
 
-	// Should only match its own type
-	require.True(t, errorspb.IsServerDbError(dbErk))
-	require.False(t, errorspb.IsUnknown(dbErk))
-	require.False(t, errorspb.IsServerDbTransactionError(dbErk))
+		require.True(t, errorspb.IsServerDbError(erk))
+		require.False(t, errorspb.IsUnknown(erk))
+		require.False(t, errorspb.IsServerDbTransactionError(erk))
+	})
 
-	// Test with transaction error
-	txErk := errorspb.ErrorServerDbTransactionError("transaction rollback failed")
-	t.Log(txErk)
+	t.Run("transaction check", func(t *testing.T) {
+		erk := errorspb.ErrorServerDbTransactionError("transaction rollback failed")
+		t.Log(erk)
+		t.Log(neatjsons.S(erk))
 
-	require.True(t, errorspb.IsServerDbTransactionError(txErk))
-	require.False(t, errorspb.IsUnknown(txErk))
-	require.False(t, errorspb.IsServerDbError(txErk))
+		require.True(t, errorspb.IsServerDbTransactionError(erk))
+		require.False(t, errorspb.IsUnknown(erk))
+		require.False(t, errorspb.IsServerDbError(erk))
+	})
 }

@@ -11,7 +11,7 @@ package erkrequire
 
 import (
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/errkratos/internal/utils"
+	"github.com/orzkratos/errkratos/erkadapt"
 	"github.com/stretchr/testify/require"
 )
 
@@ -25,7 +25,7 @@ import (
 // 使用复杂的适配来正确处理 Go 复杂的 nil 接口语义
 // 对于多步骤集成测试中验证前提条件至关重要
 func NoError(t require.TestingT, erk *errors.Error, msgAndArgs ...interface{}) {
-	require.NoError(t, utils.SafeInterface(erk), msgAndArgs...)
+	require.NoError(t, erkadapt.Adapt(erk), msgAndArgs...)
 }
 
 // Error requires that Kratos error is present with fail-fast validation
@@ -38,7 +38,7 @@ func NoError(t require.TestingT, erk *errors.Error, msgAndArgs ...interface{}) {
 // 通过内部适配机制提供健壮的错误存在验证
 // 对于分布式服务架构中的负面测试场景至关重要
 func Error(t require.TestingT, erk *errors.Error, msgAndArgs ...interface{}) {
-	require.Error(t, utils.SafeInterface(erk), msgAndArgs...)
+	require.Error(t, erkadapt.Adapt(erk), msgAndArgs...)
 }
 
 // Is requires exact equality between two Kratos errors with comprehensive comparison

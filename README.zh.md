@@ -1,6 +1,13 @@
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/orzkratos/errkratos/release.yml?branch=main&label=BUILD)](https://github.com/orzkratos/errkratos/actions/workflows/release.yml?query=branch%3Amain)
+[![GoDoc](https://pkg.go.dev/badge/github.com/orzkratos/errkratos)](https://pkg.go.dev/github.com/orzkratos/errkratos)
+[![Coverage Status](https://img.shields.io/coveralls/github/orzkratos/errkratos/main.svg)](https://coveralls.io/github/orzkratos/errkratos?branch=main)
+[![Supported Go Versions](https://img.shields.io/badge/Go-1.25+-lightgrey.svg)](https://go.dev/)
+[![GitHub Release](https://img.shields.io/github/release/orzkratos/errkratos.svg)](https://github.com/orzkratos/errkratos/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/orzkratos/errkratos)](https://goreportcard.com/report/github.com/orzkratos/errkratos)
+
 # errkratos
 
-高级 Kratos 错误处理工具，提供类型安全操作和 nil 接口陷阱防护。
+高级 Kratos 错误处理包，提供类型安全操作和 nil 接口陷阱防护。
 
 ---
 
@@ -103,15 +110,16 @@ func criticalOperation() {
 ```
 errkratos/
 ├── errors.go           # 核心 API (As, Is, From)
+├── erkadapt/           # Nil 接口适配
 ├── must/               # 测试和强制执行工具
 │   ├── erkassert/      # testify/assert 包装器
 │   ├── erkrequire/     # testify/require 包装器
 │   └── erkmust/        # 生产环境 panic 工具
 └── internal/
-    └── utils/          # Nil 接口适配
+    └── errorspb/       # 错误定义示例
 ```
 
-## 为什么选择 errkratos？
+## 为什么使用 errkratos？
 
 ### Nil 接口问题
 
@@ -124,7 +132,7 @@ fmt.Println(erk == nil)  // true
 fmt.Println(err == nil)  // false (!!)
 ```
 
-这在错误处理中会导致严重问题。errkratos 通过在所有函数中进行智能适配来解决这个问题。
+这在错误处理中会导致问题。errkratos 通过在所有函数中进行智能适配来解决这个问题。
 
 ### 清晰的命名
 
@@ -147,7 +155,7 @@ import "github.com/orzkratos/errkratos"
 - [ebzkratos](https://github.com/orzkratos/ebzkratos) - 不实现 error 接口的错误包装器
 
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-08-28 08:33:43.829511 +0000 UTC -->
+<!-- VERSION 2025-09-26 07:39:27.188023 +0000 UTC -->
 
 ## 📄 许可证类型
 
@@ -167,7 +175,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 - 🔧 **配置困扰？** 询问复杂设置的相关问题
 - 📢 **关注进展？** 关注仓库以获取新版本和功能
 - 🌟 **成功案例？** 分享这个包如何改善工作流程
-- 💬 **意见反馈？** 欢迎所有建议和宝贵意见
+- 💬 **反馈意见？** 欢迎提出建议和意见
 
 ---
 
@@ -185,7 +193,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 8. **暂存**：暂存更改（`git add .`）
 9. **提交**：提交更改（`git commit -m "Add feature xxx"`）确保向后兼容的代码
 10. **推送**：推送到分支（`git push origin feature/xxx`）
-11. **PR**：在 GitHub 上打开 Pull Request（在 GitHub 网页上）并提供详细描述
+11. **PR**：在 GitHub 上打开 Merge Request（在 GitHub 网页上）并提供详细描述
 
 请确保测试通过并包含相关的文档更新。
 
@@ -193,7 +201,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 
 ## 🌟 项目支持
 
-非常欢迎通过提交 Pull Request 和报告问题来为此项目做出贡献。
+非常欢迎通过提交 Merge Request 和报告问题来为此项目做出贡献。
 
 **项目支持：**
 
@@ -202,7 +210,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 - 📝 **撰写博客**关于开发工具和工作流程 - 我们提供写作支持
 - 🌟 **加入生态** - 致力于支持开源和（golang）开发场景
 
-**使用这个包快乐编程！** 🎉
+**祝你用这个包编程愉快！** 🎉🎉🎉
 
 <!-- TEMPLATE (ZH) END: STANDARD PROJECT FOOTER -->
 

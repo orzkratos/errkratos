@@ -1,1 +1,1 @@
-# some common proto
+# Common proto definitions
