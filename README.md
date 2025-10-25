@@ -53,6 +53,23 @@ if errkratos.Is(erk1, erk2) {
 erk := errkratos.From(err)
 ```
 
+### Concise Error Creation (newerk)
+
+```go
+import "github.com/orzkratos/errkratos/newerk"
+
+// Configure reason code field name to store enum numeric value
+newerk.SetReasonCodeFieldName("numeric_reason_code_enum")
+
+// Create type-safe error with enum
+erk := newerk.NewError(404, ErrorReason_USER_NOT_FOUND, "user %d not found", userID)
+
+// Check error type
+if newerk.IsError(err, ErrorReason_USER_NOT_FOUND, 404) {
+    // Handle user not found error
+}
+```
+
 ### Testing with Assert
 
 ```go
@@ -110,6 +127,7 @@ func criticalOperation() {
 ```
 errkratos/
 ├── errors.go           # Core API (As, Is, From)
+├── newerk/             # Concise error creation API
 ├── erkadapt/           # Nil interface adaptation
 ├── must/               # Testing and enforcement tools
 │   ├── erkassert/      # testify/assert helpers

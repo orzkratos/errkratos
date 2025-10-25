@@ -4,11 +4,10 @@ go 1.25.0
 
 require (
 	github.com/go-kratos/kratos/v2 v2.9.1
-	github.com/orzkratos/errgenkratos v0.0.5
 	github.com/stretchr/testify v1.11.1
-	github.com/yyle88/erero v1.0.23
+	github.com/yyle88/erero v1.0.24
 	github.com/yyle88/must v0.0.26
-	github.com/yyle88/neatjson v0.0.12
+	github.com/yyle88/neatjson v0.0.13
 	github.com/yyle88/zaplog v0.0.27
 	go.uber.org/zap v1.27.0
 	google.golang.org/protobuf v1.36.10
@@ -24,10 +23,11 @@ require (
 	github.com/yyle88/syntaxgo v0.0.53 // indirect
 	github.com/yyle88/tern v0.0.9 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
+	golang.org/x/net v0.46.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
-	golang.org/x/sys v0.36.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250929231259-57b25ae835d4 // indirect
-	google.golang.org/grpc v1.75.1 // indirect
+	golang.org/x/sys v0.37.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251022142026-3a174f9686a8 // indirect
+	google.golang.org/grpc v1.76.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 

@@ -1,18 +1,15 @@
 package errorspb_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/orzkratos/errgenkratos"
 	"github.com/orzkratos/errkratos/internal/errorspb"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/neatjson/neatjsons"
 )
 
 func TestMain(m *testing.M) {
-	errgenkratos.SetMetadataFieldName("numeric_reason_code")
 	m.Run()
 }
 
@@ -134,20 +131,6 @@ func TestErrorReasonStringConversion(t *testing.T) {
 	require.Equal(t, "UNKNOWN", errorspb.ErrorReason_UNKNOWN.String())
 	require.Equal(t, "SERVER_DB_ERROR", errorspb.ErrorReason_SERVER_DB_ERROR.String())
 	require.Equal(t, "SERVER_DB_TRANSACTION_ERROR", errorspb.ErrorReason_SERVER_DB_TRANSACTION_ERROR.String())
-}
-
-func TestMetadataFieldName(t *testing.T) {
-	erk := errorspb.ErrorServerDbError("test with metadata")
-	t.Log(erk)
-	t.Log(neatjsons.S(erk))
-
-	require.NotNil(t, erk.Metadata)
-
-	internalCode, exists := erk.Metadata["numeric_reason_code"]
-	require.True(t, exists)
-
-	expectedCode := fmt.Sprintf("%d", errorspb.ErrorReason_SERVER_DB_ERROR.Number())
-	require.Equal(t, expectedCode, internalCode)
 }
 
 func TestAllErrorTypesHaveCorrectHttpCode(t *testing.T) {

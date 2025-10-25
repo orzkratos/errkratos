@@ -53,6 +53,23 @@ if errkratos.Is(erk1, erk2) {
 erk := errkratos.From(err)
 ```
 
+### 简洁错误创建 (newerk)
+
+```go
+import "github.com/orzkratos/errkratos/newerk"
+
+// 配置原因码字段名用于存储枚举数值
+newerk.SetReasonCodeFieldName("numeric_reason_code_enum")
+
+// 使用枚举创建类型安全的错误
+erk := newerk.NewError(404, ErrorReason_USER_NOT_FOUND, "用户 %d 未找到", userID)
+
+// 检查错误类型
+if newerk.IsError(err, ErrorReason_USER_NOT_FOUND, 404) {
+    // 处理用户未找到错误
+}
+```
+
 ### 使用 Assert 测试
 
 ```go
@@ -110,6 +127,7 @@ func criticalOperation() {
 ```
 errkratos/
 ├── errors.go           # 核心 API (As, Is, From)
+├── newerk/             # 简洁错误创建 API
 ├── erkadapt/           # Nil 接口适配
 ├── must/               # 测试和强制执行工具
 │   ├── erkassert/      # testify/assert 包装器
